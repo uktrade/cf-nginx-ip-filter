@@ -1,0 +1,6 @@
+---
+
+applications:
+  - buildpack:
+    - python_builpack
+    - https://github.com/cloudfoundry/nginx-buildpack.git
