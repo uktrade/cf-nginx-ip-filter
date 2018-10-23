@@ -31,12 +31,12 @@
       src: ip_whitelist.conf.j2
       dest: /app/ip_whitelist.conf
   - copy:
-      content: "{{ nginx.ssl.key }}"
+      content: "{{ nginx.ssl.key | regex_replace('\\\\n', '\n') }}"
       dest: /app/ssl.key
       mode: 0600
     when: nginx.ssl.enabled
   - copy:
-      content: "{{ nginx.ssl.cert }}"
+      content: "{{ nginx.ssl.cert | regex_replace('\\\\n', '\n') }}"
       dest: /app/ssl.crt
       mode: 0644
     when: nginx.ssl.enabled

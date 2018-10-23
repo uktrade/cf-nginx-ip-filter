@@ -21,7 +21,7 @@ http {
     proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
 
     server_name _;
-    {% if nginx.ssl.enabled == 'true' or nginx.ssl.enabled == 'True' or nginx.ssl.enabled == '1' %}
+{% if nginx.ssl.enabled is sameas true %}
     listen {{ nginx.port }} ssl default_server;
     ssl_certificate ssl.crt;
     ssl_certificate_key ssl.key;
@@ -32,9 +32,9 @@ http {
     add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
     add_header X-Frame-Options DENY;
     add_header X-Content-Type-Options nosniff;
-    {% else %}
+{% else %}
     listen {{ nginx.port }} default_server;
-    {% endif %}
+{% endif %}
 
     include ip_whitelist.conf;
     include ip_blacklist.conf;
