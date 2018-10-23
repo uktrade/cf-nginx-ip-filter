@@ -23,8 +23,8 @@ http {
     server_name _;
     {% if nginx.ssl.enabled == 'true' or nginx.ssl.enabled == 'True' or nginx.ssl.enabled == '1' %}
     listen {{ nginx.port }} ssl default_server;
-    ssl_certificate conf.d/ssl.crt;
-    ssl_certificate_key conf.d/ssl.key;
+    ssl_certificate ssl.crt;
+    ssl_certificate_key ssl.key;
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
     ssl_prefer_server_ciphers on;
     ssl_stapling on;
@@ -36,7 +36,7 @@ http {
     listen {{ nginx.port }} default_server;
     {% endif %}
 
-    include conf.d/ip_whitelist.conf;
-    include conf.d/ip_blacklist.conf;
+    include ip_whitelist.conf;
+    include ip_blacklist.conf;
   }
 }
