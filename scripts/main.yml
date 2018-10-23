@@ -8,10 +8,8 @@
     ssl: "{{ lookup('env', 'SSL_ENABLED') | default(false) | bool }}"
     ssl_cert: "{{ lookup('env', 'SSL_CERT') | default('') }}"
     ssl_key: "{{ lookup('env', 'SSL_KEY') | default('') }}"
-    ip_whitelist_raw: "{{ lookup('env', 'IP_WHITELIST') | default('127.0.0.1') }}"
-    ip_blacklist_raw: "{{ lookup('env', 'IP_BLACKLIST') | default('0.0.0.0/32') }}"
-    ip_whitelist: "{{ ip_whitelist_raw.split(',') }}"
-    ip_blacklist: "{{ ip_blacklist_raw.split(',') }}"
+    ip_whitelist: "{{ lookup('env', 'IP_WHITELIST').split(',') }}"
+    ip_blacklist: "{{ lookup('env', 'IP_BLACKLIST').split(',') }}"
   tasks:
   - template:
       src: vars.yml.j2
