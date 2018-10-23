@@ -1,0 +1,44 @@
+---
+
+- hosts: localhost
+  connection: local
+  no_log: True
+  vars:
+    port: "{{ lookup('env', 'PORT') | default('8443') }}"
+    ssl: "{{ lookup('env', 'SSL_ENABLED') | default(false) | bool }}"
+    ssl_cert: "{{ lookup('env', 'SSL_CERT') | default('') }}"
+    ssl_key: "{{ lookup('env', 'SSL_KEY') | default('') }}"
+    ip_whitelist_raw: "{{ lookup('env', 'IP_WHITELIST') | default('127.0.0.1') }}"
+    ip_blacklist_raw: "{{ lookup('env', 'IP_BLACKLIST') | default('0.0.0.0/32') }}"
+    ip_whitelist: "{{ ip_whitelist_raw.split(',') }}"
+    ip_blacklist: "{{ ip_blacklist_raw.split(',') }}"
+  tasks:
+  - template:
+      src: vars.yml.j2
+      dest: vars.yml
+
+- hosts: localhost
+  connection: local
+  no_log: True
+  vars_files:
+  - vars.yml
+  tasks:
+  - template:
+      src: nginx.conf.j2
+      dest: /app/nginx.conf
+  - template:
+      src: ip_blacklist.conf.j2
+      dest: /app/ip_blacklist.conf
+  - template:
+      src: ip_whitelist.conf.j2
+      dest: /app/ip_whitelist.conf
+  - copy:
+      content: "{{ nginx.ssl.key }}"
+      dest: /app/ssl.key
+      mode: 0600
+    when: nginx.ssl.enabled
+  - copy:
+      content: "{{ nginx.ssl.cert }}"
+      dest: /app/ssl.crt
+      mode: 0644
+    when: nginx.ssl.enabled
