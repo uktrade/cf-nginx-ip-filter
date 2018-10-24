@@ -9,8 +9,6 @@ error_log /dev/stderr;
 
 http {
   access_log /dev/stdout;
-  default_type application/octet-stream;
-  include mime.types;
   sendfile on;
   tcp_nopush on;
   port_in_redirect off;
