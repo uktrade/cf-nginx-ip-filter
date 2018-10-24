@@ -2,7 +2,7 @@
 
 applications:
   - buildpack:
-    - python_builpack
+    - python_buildpack
     - https://github.com/cloudfoundry/nginx-buildpack.git
     health-check-type: http
     health-check-http-endpoint: /nginx_status
