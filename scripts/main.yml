@@ -8,8 +8,6 @@
     ssl: "{{ lookup('env', 'SSL_ENABLED') | default(false) | bool }}"
     ssl_cert: "{{ lookup('env', 'SSL_CERT') | default('') }}"
     ssl_key: "{{ lookup('env', 'SSL_KEY') | default('') }}"
-    ip_whitelist: "{{ lookup('env', 'IP_WHITELIST').split(',') }}"
-    ip_blacklist: "{{ lookup('env', 'IP_BLACKLIST').split(',') }}"
   tasks:
   - command: awk '/^nameserver/{print $2}' /etc/resolv.conf
     register: resolver
@@ -26,12 +24,6 @@
   - template:
       src: nginx.conf.j2
       dest: /app/nginx.conf
-  - template:
-      src: ip_blacklist.conf.j2
-      dest: /app/ip_blacklist.conf
-  - template:
-      src: ip_whitelist.conf.j2
-      dest: /app/ip_whitelist.conf
   - copy:
       content: "{{ nginx.ssl.key | regex_replace('\\\\n', '\n') }}"
       dest: /app/ssl.key
