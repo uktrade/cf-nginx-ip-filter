@@ -49,6 +49,7 @@ http {
     listen {{ nginx.port }} default_server;
 {% endif %}
 
+    satisfy any;
     include ip_whitelist.conf;
     include ip_blacklist.conf;
 
@@ -63,6 +64,7 @@ http {
     location /nginx_status {
       stub_status on;
       access_log off;
+      satisfy any;
       allow 10.0.0.0/8;
       allow 172.16.0.0/12;
       allow 192.168.0.0/16;
