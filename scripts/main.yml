@@ -11,6 +11,8 @@
     ip_whitelist: "{{ lookup('env', 'IP_WHITELIST').split(',') }}"
     ip_blacklist: "{{ lookup('env', 'IP_BLACKLIST').split(',') }}"
   tasks:
+  - command: awk '/^nameserver/{print $2}' /etc/resolv.conf
+    register: resolver
   - template:
       src: vars.yml.j2
       dest: vars.yml

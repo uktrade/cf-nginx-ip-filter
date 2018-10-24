@@ -10,3 +10,4 @@ nginx:
       {{ ssl_key }}
   ip_whitelist: {{ ip_whitelist }}
   ip_blacklist: {{ ip_blacklist }}
+  resolver: {{ resolver.stdout_lines }}
