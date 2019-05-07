@@ -2,5 +2,6 @@
 
 applications:
   - buildpack: staticfile_buildpack
+    stack: cflinuxfs3
     health-check-type: http
     health-check-http-endpoint: /nginx_status
